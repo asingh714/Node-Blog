@@ -51,8 +51,31 @@ server.post("/users", (req,res) => {
             res.status(500).json({ error: "There was an error while saving the user to the database" })
         })
     }
-
 })
+
+
+// DELETE
+server.delete("/users/:userId", (req, res) => {
+  const id = req.params.userId;
+
+  db.get(id)
+    .then(user => {
+      if (user) {
+        db.remove(id).then(count => {
+          res.status(200).json(user);
+        });
+      } else {
+        res
+          .status(404)
+          .json({ error: "The user with the specified ID does not exist." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The user could not be removed." });
+    });
+});
+
+
 
 
 module.exports = server;
