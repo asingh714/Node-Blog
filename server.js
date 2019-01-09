@@ -3,12 +3,26 @@ const db = require("./data/helpers/userDb");
 
 
 const server = express();
+
+
+
+
+
+// MIDDLEWARE
 server.use(express.json());
 
+const uppercase = (req, res, next) => {
+    req.body.name = req.body.name.toUpperCase();
+    next();
+}
 
+
+
+// Display Hello to homepage.
 server.get("/", (req, res) => {
     res.send("Hello.")
 })
+
 
 // GET - READ
 server.get("/users", (req, res) => {
@@ -37,7 +51,7 @@ server.get("/users/:userId", (req, res) => {
 
 
 // POST - CREATE 
-server.post("/users", (req,res) => {
+server.post("/users", uppercase, (req,res) => {
     const user = req.body;
 
     if (!user.name) {
@@ -77,7 +91,7 @@ server.delete("/users/:userId", (req, res) => {
 
 
 // PUT - UPDATE
-server.put("/users/:userId", (req, res) => {
+server.put("/users/:userId", uppercase, (req, res) => {
     const id = req.params.userId;
     const changes = req.body;
 
