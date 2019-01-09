@@ -56,6 +56,8 @@ server.post("/users", uppercase, (req,res) => {
 
     if (!user.name) {
         res.status(400).json({ error: "Please provide a name for the user." })
+    } else if (user.name.length > 128) {
+        res.status(400).json({ error: "Please provide a name that is under 129 characters." })
     } else {
         db.insert(user)
         .then(result => {
