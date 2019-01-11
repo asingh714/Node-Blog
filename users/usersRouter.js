@@ -2,12 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../data/helpers/userDb");
 
-
-
 const uppercase = require("../middleware/uppercaseMiddleware");
 
-
-  
 // GET - READ
 router.get("/", (req, res) => {
   db.get()
@@ -50,11 +46,9 @@ router.post("/", uppercase, (req, res) => {
         res.status(201).json(result);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({
-            error: "There was an error while saving the user to the database"
-          });
+        res.status(500).json({
+          error: "There was an error while saving the user to the database"
+        });
       });
   }
 });
@@ -105,7 +99,5 @@ router.put("/:userId", uppercase, (req, res) => {
         .json({ error: "The user information could not be modified." });
     });
 });
-
-
 
 module.exports = router;
