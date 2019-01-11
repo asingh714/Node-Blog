@@ -1,23 +1,15 @@
 const express = require("express");
-const db = require("./data/helpers/userDb");
+const router = express.Router();
+const db = require("../data/helpers/userDb");
 
-const server = express();
 
-// MIDDLEWARE
-server.use(express.json());
 
-const uppercase = (req, res, next) => {
-  req.body.name = req.body.name.toUpperCase();
-  next();
-};
+const uppercase = require("../middleware/uppercaseMiddleware");
 
-// Display Hello to homepage.
-server.get("/", (req, res) => {
-  res.send("Hello.");
-});
 
+  
 // GET - READ
-server.get("/users", (req, res) => {
+router.get("/", (req, res) => {
   db.get()
     .then(users => {
       res.status(200).json(users);
@@ -28,7 +20,7 @@ server.get("/users", (req, res) => {
 });
 
 // GET - READ with specific ID
-server.get("/users/:userId", (req, res) => {
+router.get("/:userId", (req, res) => {
   const id = req.params.userId;
 
   db.get(id)
@@ -43,7 +35,7 @@ server.get("/users/:userId", (req, res) => {
 });
 
 // POST - CREATE
-server.post("/users", uppercase, (req, res) => {
+router.post("/", uppercase, (req, res) => {
   const user = req.body;
 
   if (!user.name) {
@@ -68,7 +60,7 @@ server.post("/users", uppercase, (req, res) => {
 });
 
 // DELETE
-server.delete("/users/:userId", (req, res) => {
+router.delete("/:userId", (req, res) => {
   const id = req.params.userId;
 
   db.get(id)
@@ -89,7 +81,7 @@ server.delete("/users/:userId", (req, res) => {
 });
 
 // PUT - UPDATE
-server.put("/users/:userId", uppercase, (req, res) => {
+router.put("/:userId", uppercase, (req, res) => {
   const id = req.params.userId;
   const changes = req.body;
 
@@ -114,4 +106,6 @@ server.put("/users/:userId", uppercase, (req, res) => {
     });
 });
 
-module.exports = server;
+
+
+module.exports = router;
