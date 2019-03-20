@@ -110,6 +110,26 @@ router.put("/:id", uppercase, (req, res) => {
   });
 });
 
+// DELETE USER
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  db.getById(id)
+    .then(user => {
+      if (user) {
+        db.remove(id).then(deleted => {
+          res.status(200).json(user);
+        });
+      } else {
+        res.status(404).json({
+          error: "The user with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error: "The user could not be removed" });
+    });
+});
 
 
 module.exports = router;
