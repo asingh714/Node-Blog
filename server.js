@@ -1,9 +1,9 @@
-const express = require("express"); 
+const express = require("express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
 const usersRouter = require("./users/users-router.js");
-const postsRouter = require("./posts/posts-router.js")
+const postsRouter = require("./posts/posts-router.js");
 
 const server = express();
 
@@ -13,6 +13,6 @@ server.use(express.json());
 server.use(morgan("short"));
 
 server.use("/api/users", usersRouter);
-server.use("/api/posts", postsRouter)
+server.use("/api/posts", postsRouter);
 
 module.exports = server;
