@@ -41,7 +41,7 @@ router.get("/:id", (req, res) => {
 });
 
 // GET LISTS OF POSTS BY USER
-router.get("/posts/:id", (req, res) => {
+router.get("/:id/posts", (req, res) => {
   const { id } = req.params;
 
   db.getUserPosts(id)
