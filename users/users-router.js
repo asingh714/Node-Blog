@@ -83,7 +83,32 @@ router.post("/", uppercase, (req, res) => {
   }
 });
 
+// PUT USER
+router.put("/:id", uppercase, (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
 
+  db.getById(id).then(user => {
+    if (!user) {
+      res
+        .status(404)
+        .json({ error: "The user with the specified ID does not exist." });
+    }
+    if (!changes.name) {
+      res.status(400).json({ error: "Please provide name for the user." });
+    }
+
+    db.update(id, changes)
+      .then(result => {
+        res.status(200).json({ result });
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .json({ error: "The user information could not be modified." });
+      });
+  });
+});
 
 
 
