@@ -4,6 +4,8 @@ const db = require("../data/helpers/userDb");
 
 const router = express.Router();
 
+const uppercase = require("../custom_middleware/uppercaseMiddleware");
+
 // GET USERS
 router.get("/", (req, res) => {
   db.get()
@@ -61,7 +63,7 @@ router.get("/posts/:id", (req, res) => {
 });
 
 // POST USER
-router.post("/", (req, res) => {
+router.post("/", uppercase, (req, res) => {
   const user = req.body;
 
   if (!user.name) {
