@@ -60,6 +60,27 @@ router.get("/posts/:id", (req, res) => {
     });
 });
 
+// POST USER
+router.post("/", (req, res) => {
+  const user = req.body;
+
+  if (!user.name) {
+    res.status(400).json({
+      error: "Please provide a name for the user."
+    });
+  } else {
+    db.insert(user)
+      .then(result => {
+        res.status(201).json(result);
+      })
+      .catch(error => {
+        res.status(500).json({
+          error: "There was an error while saving the user to the database"
+        });
+      });
+  }
+});
+
 
 
 
