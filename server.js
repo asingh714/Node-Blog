@@ -16,3 +16,4 @@ server.use("/api/users", usersRouter);
 server.use("/api/posts", postsRouter);
 
 module.exports = server;
+
