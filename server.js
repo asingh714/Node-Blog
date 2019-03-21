@@ -15,5 +15,10 @@ server.use(morgan("short"));
 server.use("/api/users", usersRouter);
 server.use("/api/posts", postsRouter);
 
+server.get('/', (req, res) => {
+  res.send(`Data is on /api/users & /api/posts`);
+});
+
+
 module.exports = server;
 
