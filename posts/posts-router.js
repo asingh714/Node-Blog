@@ -41,7 +41,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   const post = req.body;
 
-  if (!post.text && !post.user_id) {
+  if (!post.text || !post.user_id) {
     res.status(400).json({
       errorMessage: "Please provide text and a user_id for the post."
     });
